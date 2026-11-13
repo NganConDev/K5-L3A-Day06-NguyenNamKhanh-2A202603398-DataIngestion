@@ -1,0 +1,202 @@
+[
+  {
+    "id": "dev_01",
+    "split": "dev",
+    "question": "What should a team do before writing code?",
+    "expected_answer": "Define goals, constraints, and success criteria, and clarify requirements with stakeholders.",
+    "gold_source_id": "software-engineering-public-domain",
+    "gold_page": 1,
+    "evidence_quote": "Good teams define goals, constraints, and success criteria before writing code.",
+    "filter": null
+  },
+  {
+    "id": "dev_02",
+    "split": "dev",
+    "question": "Why is design important in software engineering?",
+    "expected_answer": "It shapes the system so that change remains manageable and dependencies stay clear.",
+    "gold_source_id": "software-engineering-public-domain",
+    "gold_page": 2,
+    "evidence_quote": "Design is not merely decoration. It is the process of shaping system structure so that change stays manageable.",
+    "filter": null
+  },
+  {
+    "id": "dev_03",
+    "split": "dev",
+    "question": "How should function names be chosen?",
+    "expected_answer": "They should reveal intent clearly and communicate meaning precisely.",
+    "gold_source_id": "software-engineering-public-domain",
+    "gold_page": 5,
+    "evidence_quote": "Clear names reduce cognitive load and help a maintenance engineer understand code quickly.",
+    "filter": null
+  },
+  {
+    "id": "dev_04",
+    "split": "dev",
+    "question": "Why are comments less useful when code is clear?",
+    "expected_answer": "Because self-explanatory code reduces the need to explain obvious behavior and avoids stale comments.",
+    "gold_source_id": "software-engineering-public-domain",
+    "gold_page": 6,
+    "evidence_quote": "When code is self-explanatory, comments become noise.",
+    "filter": null
+  },
+  {
+    "id": "dev_05",
+    "split": "dev",
+    "question": "What should testing help with in a system?",
+    "expected_answer": "It guides decomposition, isolates behavior, and validates assumptions.",
+    "gold_source_id": "software-engineering-public-domain",
+    "gold_page": 7,
+    "evidence_quote": "Good tests guide decomposition because they force engineers to isolate behavior and validate assumptions.",
+    "filter": null
+  },
+  {
+    "id": "dev_06",
+    "split": "dev",
+    "question": "What is the main principle behind simplicity in engineering?",
+    "expected_answer": "Prefer a design that is easy to reason about, maintain, and change over clever but fragile solutions.",
+    "gold_source_id": "software-engineering-public-domain",
+    "gold_page": 8,
+    "evidence_quote": "A codebase that is easy to change and easy to reason about often wins over a clever but fragile implementation.",
+    "filter": null
+  },
+  {
+    "id": "dev_07",
+    "split": "dev",
+    "question": "Where should validation usually happen?",
+    "expected_answer": "At the boundary of the system, as soon as invalid data enters it.",
+    "gold_source_id": "software-engineering-public-domain",
+    "gold_page": 10,
+    "evidence_quote": "Inputs should be checked as soon as they enter the system, preferably at the periphery.",
+    "filter": { "section": "validation" }
+  },
+  {
+    "id": "dev_08",
+    "split": "dev",
+    "question": "Why do coding standards matter?",
+    "expected_answer": "They reduce friction, improve collaboration, and make code easier to review and maintain.",
+    "gold_source_id": "software-engineering-public-domain",
+    "gold_page": 11,
+    "evidence_quote": "A team with shared standards usually ships better software.",
+    "filter": { "section": "standards" }
+  },
+  {
+    "id": "dev_09",
+    "split": "dev",
+    "question": "What is the value of version control beyond storage?",
+    "expected_answer": "It records decisions and helps teams understand how a system evolved and why changes were made.",
+    "gold_source_id": "software-engineering-public-domain",
+    "gold_page": 12,
+    "evidence_quote": "Version control is not just storage. It is a record of decisions, experiments, and changes in context.",
+    "filter": null
+  },
+  {
+    "id": "dev_10",
+    "split": "dev",
+    "question": "How should architecture support growth?",
+    "expected_answer": "It should support growth without adding unnecessary complexity or making dependencies unclear.",
+    "gold_source_id": "software-engineering-public-domain",
+    "gold_page": 13,
+    "evidence_quote": "Architecture should support growth without creating needless complexity.",
+    "filter": { "section": "architecture" }
+  },
+  {
+    "id": "dev_11",
+    "split": "dev",
+    "question": "Why are small functions easier to maintain?",
+    "expected_answer": "They are easier to test, explain, and change because they have a single responsibility.",
+    "gold_source_id": "software-engineering-public-domain",
+    "gold_page": 4,
+    "evidence_quote": "A function that tries to do too many things becomes hard to test and harder to explain.",
+    "filter": null
+  },
+  {
+    "id": "dev_12",
+    "split": "dev",
+    "question": "What is the role of refactoring?",
+    "expected_answer": "It improves clarity and structure without changing external behavior.",
+    "gold_source_id": "software-engineering-public-domain",
+    "gold_page": 14,
+    "evidence_quote": "Refactoring is the process of restructuring code to improve clarity without changing its external behavior.",
+    "filter": null
+  },
+  {
+    "id": "dev_13",
+    "split": "dev",
+    "question": "Why is security a design concern rather than a final step?",
+    "expected_answer": "Because robust boundaries and validation must be built into the system from the start.",
+    "gold_source_id": "software-engineering-public-domain",
+    "gold_page": 18,
+    "evidence_quote": "Security is not an optional layer added at the end. It must be designed into the system from the beginning.",
+    "filter": { "section": "security" }
+  },
+  {
+    "id": "dev_14",
+    "split": "dev",
+    "question": "What should monitoring provide to teams?",
+    "expected_answer": "Signals to detect drift, bottlenecks, and incidents, so diagnosis is based on evidence rather than guesswork.",
+    "gold_source_id": "software-engineering-public-domain",
+    "gold_page": 19,
+    "evidence_quote": "Monitoring gives teams visibility into real behavior.",
+    "filter": null
+  },
+  {
+    "id": "dev_15",
+    "split": "dev",
+    "question": "Why should trade-offs be explicit?",
+    "expected_answer": "Because every technical decision makes a sacrifice somewhere, and teams need to understand the reasoning behind it.",
+    "gold_source_id": "software-engineering-public-domain",
+    "gold_page": 26,
+    "evidence_quote": "Great engineers make these trade-offs explicit and explain the reason behind them.",
+    "filter": null
+  },
+  {
+    "id": "test_01",
+    "split": "test",
+    "question": "What does a team need to be careful about when they optimize for speed?",
+    "expected_answer": "They may accumulate complexity, increase maintenance burden, and lose clarity over time.",
+    "gold_source_id": "software-engineering-public-domain",
+    "gold_page": 27,
+    "evidence_quote": "Complexity tends to accumulate when teams optimize for short-term speed over long-term understandability.",
+    "filter": null
+  },
+  {
+    "id": "test_02",
+    "split": "test",
+    "question": "Why is documentation valuable in a software project?",
+    "expected_answer": "It explains intent, helps new team members, and reduces recurring questions about the system.",
+    "gold_source_id": "software-engineering-public-domain",
+    "gold_page": 28,
+    "evidence_quote": "Documentation can also hand off domain knowledge to new team members.",
+    "filter": { "section": "documentation" }
+  },
+  {
+    "id": "test_03",
+    "split": "test",
+    "question": "What makes a system safer to change over time?",
+    "expected_answer": "Clear interfaces, testable behavior, and a disciplined focus on simplicity and feedback.",
+    "gold_source_id": "software-engineering-public-domain",
+    "gold_page": 30,
+    "evidence_quote": "The best systems let teams add features, fix bugs, and adapt to new constraints without destabilizing the entire product.",
+    "filter": null
+  },
+  {
+    "id": "test_04",
+    "split": "test",
+    "question": "What does good observability require?",
+    "expected_answer": "Choosing the right signals so the team can detect issues quickly and diagnose them based on evidence.",
+    "gold_source_id": "software-engineering-public-domain",
+    "gold_page": 19,
+    "evidence_quote": "Good observability is not just about collecting data. It is about choosing the right signals.",
+    "filter": null
+  },
+  {
+    "id": "test_05",
+    "split": "test",
+    "question": "Why should systems favor explicit data flow?",
+    "expected_answer": "Because hidden side effects and unclear transformations make behavior difficult to predict and maintain.",
+    "gold_source_id": "software-engineering-public-domain",
+    "gold_page": 23,
+    "evidence_quote": "Data flow should be explicit. Hidden side effects make systems unpredictable and expensive to maintain.",
+    "filter": { "section": "data" }
+  }
+]

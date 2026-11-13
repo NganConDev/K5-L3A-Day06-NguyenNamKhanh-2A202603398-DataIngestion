@@ -1,0 +1,13 @@
+{
+  "document_id": "software-engineering-public-domain",
+  "title": "Software Engineering Handbook",
+  "source_path_or_url": "/Users/nguyennamkhanh/Documents/AI In Action/AI20K_Lab/K5-L3A-Day06-NguyenNamKhanh-2A202603398-DataIngestion/starter/data/software-engineering-public-domain.txt",
+  "license_or_permission": "Created for educational lab use; contains original public-domain-style text authored for this assignment.",
+  "accessed_at": "2026-11-13",
+  "page_count": 30,
+  "page_ids": [
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
+    22, 23, 24, 25, 26, 27, 28, 29, 30
+  ],
+  "notes": "This is a local synthetic educational corpus designed for the Day 06 ingestion benchmark and is included only for the lab environment."
+}
