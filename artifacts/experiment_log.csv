@@ -1,4 +1,4 @@
 strategy,chunking,chunk_size,overlap,metadata,filter,vectorizer,hypothesis,dev_hit1,dev_hit3,test_hit1,test_hit3,notes
-A,,,,,,,,,,,,
-B,,,,,,,,,,,,
-C,,,,,,,,,,,,
+A,fixed_size,180,30,"document_id,source,page,section,page_heading","none","TF-IDF (TfidfVectorizer, stop_words='english', ngram_range=(1,2), max_features=2000)","Baseline lexical retrieval with fixed windows; keep direct phrases and section headings in a stable chunk layout.",13,13,5,5,"Best overall: 18/20 Hit@1 and 18/20 Evidence Hit@3 (0.90 overall). Strongest on front matter and direct wording."
+B,by_paragraph,180,0,"document_id,source,page,section,page_heading","none","TF-IDF (TfidfVectorizer, stop_words='english', ngram_range=(1,2), max_features=2000)","Paragraph grouping should improve coherence and reduce fragmentation versus fixed-size windows.",12,12,5,5,"Competitive: 17/20 Hit@1 and 17/20 Evidence Hit@3 (0.85 overall). Slightly less exact than A on quote-heavy questions."
+C,by_paragraph,180,0,"document_id,source,page,section,page_heading","section when the question implies a relevant section","TF-IDF (TfidfVectorizer, stop_words='english', ngram_range=(1,2), max_features=2000)","Metadata filtering should improve precision by narrowing retrieval to the relevant section for section-driven questions.",12,12,5,5,"Matches B on the final benchmark: 17/20 Hit@1 and 17/20 Evidence Hit@3 (0.85 overall). Useful for structured filtering but not a clear gain over paragraph-only chunking here."
