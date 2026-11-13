@@ -18,9 +18,10 @@ class PgVectorStore:
         with psycopg.connect(self.database_url) as connection:
             with connection.cursor() as cursor:
                 cursor.execute("CREATE EXTENSION IF NOT EXISTS vector")
+                cursor.execute("DROP TABLE IF EXISTS chunks")
                 cursor.execute(
                     f"""
-                    CREATE TABLE IF NOT EXISTS chunks (
+                    CREATE TABLE chunks (
                         strategy TEXT NOT NULL,
                         chunk_id TEXT NOT NULL,
                         document_id TEXT NOT NULL,

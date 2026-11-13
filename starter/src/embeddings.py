@@ -26,7 +26,7 @@ class MyEmbedder:
 
     def __init__(self, model_name: str = "tfidf-local") -> None:
         self.model_name = model_name
-        self.vectorizer = TfidfVectorizer(stop_words="english", ngram_range=(1, 2))
+        self.vectorizer = TfidfVectorizer(stop_words="english", ngram_range=(1, 2), max_features=2000)
         self.dimensions = 0
 
     def fit(self, texts: list[str]) -> None:
