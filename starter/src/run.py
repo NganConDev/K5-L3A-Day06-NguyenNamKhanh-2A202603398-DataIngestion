@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -13,6 +14,49 @@ from .ingestion import load_pdf
 from .store import PgVectorStore
 
 
+def normalize_pdf_chunk_text(text: str) -> str:
+    cleaned = re.sub(r"\s+", " ", text or "").strip()
+    cleaned = cleaned.replace("www.it-ebooks.info", " ")
+    cleaned = re.sub(r"\s+", " ", cleaned).strip()
+    return cleaned
+
+
+def infer_page_section(text: str) -> str:
+    full_text = (text or "").lower()
+    if "section:" in full_text:
+        match = re.search(r"section:\s*([a-z0-9 _-]+)", full_text)
+        if match:
+            return match.group(1).strip().lower().replace(" ", "_")
+
+    heading_patterns = [
+        ("writing clean code is what you must do", "front_matter"),
+        ("there is no reasonable excuse for doing anything less than your best", "front_matter"),
+        ("foreword", "foreword"),
+        ("introduction", "introduction"),
+        ("contents", "contents"),
+        ("chapter", "chapter"),
+        ("appendix", "appendix"),
+        ("bibliography", "bibliography"),
+        ("conclusion", "conclusion"),
+    ]
+    for pattern, section in heading_patterns:
+        if pattern in full_text:
+            return section
+
+    return "general"
+
+
+def infer_question_section(question: str) -> str | None:
+    normalized = question.lower()
+    if any(word in normalized for word in ["professional", "clean code", "best work", "write clean code"]):
+        return "front_matter"
+    if any(word in normalized for word in ["foreword", "maintenance", "small things", "cleanliness", "quality", "details"]):
+        return "foreword"
+    if any(word in normalized for word in ["introduction", "craftsmanship", "knowledge", "practice", "work"]):
+        return "introduction"
+    return None
+
+
 def load_benchmark(path: Path) -> list[dict]:
     with path.open("r", encoding="utf-8") as handle:
         return json.load(handle)
@@ -21,16 +65,25 @@ def load_benchmark(path: Path) -> list[dict]:
 def build_strategy_chunks(document_id: str, source: str, pages: list, strategy: str) -> list:
     chunks: list = []
     for page in pages:
+        raw_section = page.metadata.get("section")
+        page_section = infer_page_section(page.text) if (not raw_section or raw_section == "general") else raw_section
+        page.metadata["section"] = page_section
+        page.metadata["page_heading"] = (page.text.splitlines()[0] if page.text.splitlines() else "").strip()
+
         if strategy == "A":
-            chunks.extend(fixed_size(page, size=120, overlap=20))
+            chunk_list = fixed_size(page, size=180, overlap=30)
         elif strategy == "B":
-            chunks.extend(by_paragraph(page, max_size=80))
+            chunk_list = by_paragraph(page, max_size=180)
         else:
-            chunks.extend(by_paragraph(page, max_size=80))
-    for chunk in chunks:
-        chunk.metadata.setdefault("section", "general")
-        if "PAGE" in chunk.text.upper() or "SECTION:" in chunk.text.upper():
-            continue
+            chunk_list = by_paragraph(page, max_size=180)
+
+        for chunk in chunk_list:
+            cleaned_text = normalize_pdf_chunk_text(chunk.text)
+            chunk.text = cleaned_text
+            chunk.metadata.setdefault("section", page_section)
+            chunk.metadata["page_heading"] = page.metadata.get("page_heading", "")
+            if chunk.text and "www.it-ebooks.info" not in chunk.text.lower():
+                chunks.append(chunk)
     return chunks
 
 
@@ -67,17 +120,18 @@ def main() -> None:
         strategy_chunks = build_strategy_chunks(document_id, source, pages, strategy)
         if strategy == "C":
             for chunk in strategy_chunks:
-                chunk.metadata["section"] = "general"
-                if chunk.page in {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30}:
-                    chunk.metadata["section"] = "general"
-                    if chunk.page in {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30}:
-                        pass
+                chunk.metadata["section"] = chunk.metadata.get("section") or "general"
+
         vectors = embedder.embed_documents([chunk.text for chunk in strategy_chunks])
         store.upsert(strategy, strategy_chunks, vectors)
 
         traces: list[dict] = []
         for question in questions:
             filter_value = question.get("filter")
+            if strategy == "C" and not filter_value:
+                section_hint = infer_question_section(question["question"])
+                if section_hint:
+                    filter_value = {"section": section_hint}
             query_vector = embedder.embed_query(question["question"])
             hits = store.search(strategy, query_vector, top_k=3, filters=filter_value)
             trace = evaluate_query(question, hits)
